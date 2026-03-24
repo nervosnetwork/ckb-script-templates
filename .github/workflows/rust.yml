@@ -40,7 +40,7 @@ jobs:
         git submodule add https://github.com/nervosnetwork/ckb-c-stdlib deps/ckb-c-stdlib &&
         git submodule add https://github.com/xxuejie/lib-dummy-atomics deps/lib-dummy-atomics
     - name: Lock Rust version
-      run: cd test-workspace && echo "1.85.1" > rust-toolchain
+      run: cd test-workspace && echo "1.92.0" > rust-toolchain
     - name: Install riscv64 target & clippy
       run: cd test-workspace && rustup target add riscv64imac-unknown-none-elf && rustup component add clippy
     - name: Run all checks
@@ -60,7 +60,7 @@ jobs:
     - name: Generate standalone contract
       run: cargo generate --path . standalone-contract --name test-contract
     - name: Lock Rust version
-      run: cd test-contract && echo "1.85.1" > rust-toolchain
+      run: cd test-contract && echo "1.92.0" > rust-toolchain
     - name: Run all checks
       run: cd test-contract && make build test check clippy
     - name: Reproducible build runs
