@@ -7,8 +7,8 @@
 set -ex
 
 DOCKER="${DOCKER:-docker}"
-# docker pull docker.io/cryptape/llvm-n-rust:20250617
-DOCKER_IMAGE="${DOCKER_IMAGE:-docker.io/cryptape/llvm-n-rust@sha256:d6d1f9a6656039273210de91913c828f5b4aa4a3282d2c93ed19bcb7bbf728fe}"
+# docker pull nervos/llvm-n-rust:20260325
+DOCKER_IMAGE="${DOCKER_IMAGE:-docker.io/nervos/llvm-n-rust@sha256:cfe226cbb93955b72209eac9db2d99b9405b03871972ea2998c7059dc4dd920f}"
 CHECKSUM_FILE_PATH="${CHECKSUM_FILE_PATH:-checksums.txt}"
 
 # We are parsing command line arguments based on tips from:
