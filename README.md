@@ -189,7 +189,7 @@ The templates provided here, use the same conventions as `ckb-native-build-sampl
 
 When using this set of templates, we always recommend to use locally installed native versions of LLVM & Rust to build and test your scripts. However, reproducible build is an important part of CKB scripts, which would require locked versions of LLVM & Rust to work. It might not be an easy task when using locally installed versions of compilers.
 
-For the time being, we have prepared a script that does reproducible build via [a docker container image](https://github.com/nervos/llvm-n-rust). We do want to mention that docker is not necessarily THE way to do reproducible build, nor is it the best way to do reproducible build. There might well be other ways that are better, such as chroot or Nix. It's just that historically, docker has been used in CKB script's build process, and adding a script leveraging docker here, provides an easy solution into the issue.
+For the time being, we have prepared a script that does reproducible build via [a docker container image](https://github.com/nervosnetwork/llvm-n-rust). We do want to mention that docker is not necessarily THE way to do reproducible build, nor is it the best way to do reproducible build. There might well be other ways that are better, such as chroot or Nix. It's just that historically, docker has been used in CKB script's build process, and adding a script leveraging docker here, provides an easy solution into the issue.
 
 To do reproducible build, you can use the included script with varying commands:
 
