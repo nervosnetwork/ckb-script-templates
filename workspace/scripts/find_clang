@@ -21,9 +21,7 @@ if [[ -n "${BREW_PREFIX}" ]]; then
     "${BREW_PREFIX}/opt/llvm@19/bin/${SEARCH_TARGET}"
     "${BREW_PREFIX}/opt/llvm@20/bin/${SEARCH_TARGET}"
     "${BREW_PREFIX}/opt/llvm@21/bin/${SEARCH_TARGET}"
-    "${BREW_PREFIX}/opt/llvm@18/bin/${SEARCH_TARGET}"
-    "${BREW_PREFIX}/opt/llvm@17/bin/${SEARCH_TARGET}"
-    "${BREW_PREFIX}/opt/llvm@16/bin/${SEARCH_TARGET}"
+    "${BREW_PREFIX}/opt/llvm@22/bin/${SEARCH_TARGET}"
   )
 fi
 
