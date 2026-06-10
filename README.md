@@ -8,7 +8,7 @@ This repository keeps a series of CKB script templates that can be inflated via 
 
  [molecule](https://github.com/nervosnetwork/molecule) starting from 0.8.0, switches to [bytes](https://crates.io/crates/bytes) instead of `Vec` internally to keep data in `no_std` environment. However, bytes would require atomic builtins so as to function, this could lead to unsupported CKB-VM instructions (RISC-V A extension instructions to be precise) being generated. There are 2 ways to solve this issue:
 
-* Enable `dummy-atomic` feature in `ckb-std` crate, also use make sure `FULL_RUSTFLAGS` in the contract makefile is updated so `-a` is included, for example: `FULL_RUSTFLAGS := -C target-feature=+zba,+zbb,+zbc,+zbs,-a $(CUSTOM_RUSTFLAGS)`. Or see [this PR](https://github.com/cryptape/ckb-script-templates/pull/17) for how to change `RUSTFLAGS`.
+* Make sure `FULL_RUSTFLAGS` in the contract makefile is updated so `passes=lower-atomic` is included, for example: `FULL_RUSTFLAGS := -C target-feature=+zba,+zbb,+zbc,+zbs -C passes=lower-atomic $(CUSTOM_RUSTFLAGS)`. Or see [this PR](https://github.com/cryptape/ckb-script-templates/pull/17) for how to change `RUSTFLAGS`.
 * Enable `bytes_vec` feature in `molecule` crate
 
 [ckb-gen-types](https://crates.io/crates/ckb-gen-types) starting from 0.117.0 is also affected, since `ckb-gen-types` has upgraded to `molecule` 0.8.0 in this version.
