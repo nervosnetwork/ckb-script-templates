@@ -1,0 +1,33 @@
+name: Daily Compatibility Check
+
+on:
+  schedule:
+    # Run every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  compatibility-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install llvm
+      run: sudo apt update && sudo apt install -y clang llvm
+
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        target: riscv64imac-unknown-none-elf
+
+    - name: Install cargo generate
+      run: cargo install cargo-generate
+
+    - name: Generate workspace and run test
+      run: |
+        cargo generate gh:cryptape/ckb-script-templates workspace --name ckb-rust-script
+        cd ckb-rust-script
+        make generate CRATE=hello-world
+        make build
+        cargo test -- tests::test_hello_world --nocapture
