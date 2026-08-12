@@ -2,7 +2,11 @@
 # making it hard to use.
 cur_dir = $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
-TOP := $(cur_dir)
+TOP := $(shell cd "$(cur_dir)"; while [ ! -f scripts/find_clang ] && [ ! -e .git ] && [ "$$PWD" != "/" ]; do cd ..; done; pwd)
+ifeq ($(shell ls "$(TOP)/scripts/find_clang" 2>/dev/null),)
+$(error scripts/find_clang not found; please run make from a workspace root containing scripts/find_clang (or use standalone-contract))
+endif
+
 # RUSTFLAGS that are likely to be tweaked by developers. For example,
 # while we enable debug logs by default here, some might want to strip them
 # for minimal code size / consumed cycles.

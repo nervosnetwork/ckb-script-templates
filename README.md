@@ -8,7 +8,7 @@ This repository keeps a series of CKB script templates that can be inflated via 
 
  [molecule](https://github.com/nervosnetwork/molecule) starting from 0.8.0, switches to [bytes](https://crates.io/crates/bytes) instead of `Vec` internally to keep data in `no_std` environment. However, bytes would require atomic builtins so as to function, this could lead to unsupported CKB-VM instructions (RISC-V A extension instructions to be precise) being generated. There are 2 ways to solve this issue:
 
-* Make sure `FULL_RUSTFLAGS` in the contract makefile is updated so `passes=lower-atomic` is included, for example: `FULL_RUSTFLAGS := -C target-feature=+zba,+zbb,+zbc,+zbs -C passes=lower-atomic $(CUSTOM_RUSTFLAGS)`. Or see [this PR](https://github.com/cryptape/ckb-script-templates/pull/17) for how to change `RUSTFLAGS`.
+* Make sure `FULL_RUSTFLAGS` in the contract makefile is updated so `passes=lower-atomic` is included, for example: `FULL_RUSTFLAGS := -C target-feature=+zba,+zbb,+zbc,+zbs -C passes=lower-atomic $(CUSTOM_RUSTFLAGS)`. Or see [this PR](https://github.com/nervosnetwork/ckb-script-templates/pull/17) for how to change `RUSTFLAGS`.
 * Enable `bytes_vec` feature in `molecule` crate
 
 [ckb-gen-types](https://crates.io/crates/ckb-gen-types) starting from 0.117.0 is also affected, since `ckb-gen-types` has upgraded to `molecule` 0.8.0 in this version.
@@ -34,8 +34,8 @@ The following dependencies are required for the templates:
 To generate a workspace template, use the following command:
 
 ```
-$ cargo generate gh:cryptape/ckb-script-templates workspace
-⚠️   Favorite `gh:cryptape/ckb-script-templates` not found in config, using it as a git repository: https://github.com/cryptape/ckb-script-templates.git
+$ cargo generate gh:nervosnetwork/ckb-script-templates workspace
+⚠️   Favorite `gh:nervosnetwork/ckb-script-templates` not found in config, using it as a git repository: https://github.com/nervosnetwork/ckb-script-templates.git
 🤷   Project Name: my-first-contract-workspace
 🔧   Destination: /tmp/my-first-contract-workspace ...
 🔧   project-name: my-first-contract-workspace ...
@@ -48,8 +48,8 @@ $ cargo generate gh:cryptape/ckb-script-templates workspace
 Or you can manually specify the name and skip the prompt:
 
 ```
-$ cargo generate gh:cryptape/ckb-script-templates workspace --name my-first-contract-workspace
-⚠️   Favorite `gh:cryptape/ckb-script-templates` not found in config, using it as a git repository: https://github.com/cryptape/ckb-script-templates.git
+$ cargo generate gh:nervosnetwork/ckb-script-templates workspace --name my-first-contract-workspace
+⚠️   Favorite `gh:nervosnetwork/ckb-script-templates` not found in config, using it as a git repository: https://github.com/nervosnetwork/ckb-script-templates.git
 🔧   Destination: /tmp/my-first-contract-workspace ...
 🔧   project-name: my-first-contract-workspace ...
 🔧   Generating template ...
@@ -61,9 +61,9 @@ $ cargo generate gh:cryptape/ckb-script-templates workspace --name my-first-cont
 This is probably the only longer command you will deal with when using the templates repository. You can save them as an alias in your shell:
 
 ```
-$ alias create-ckb-scripts="cargo generate gh:cryptape/ckb-script-templates workspace"
+$ alias create-ckb-scripts="cargo generate gh:nervosnetwork/ckb-script-templates workspace"
 $ create-ckb-scripts
-⚠️   Favorite `gh:cryptape/ckb-script-templates` not found in config, using it as a git repository: https://github.com/cryptape/ckb-script-templates.git
+⚠️   Favorite `gh:nervosnetwork/ckb-script-templates` not found in config, using it as a git repository: https://github.com/nervosnetwork/ckb-script-templates.git
 🤷   Project Name: my-first-contract-workspace
 🔧   Destination: /tmp/my-first-contract-workspace ...
 🔧   project-name: my-first-contract-workspace ...
@@ -126,7 +126,7 @@ $ make generate CRATE=second-contract
 ✨   Done! New project created /tmp/my-first-contract-workspace/contracts/second-contract
 ```
 
-By default, the newly created crate is using [contract](https://github.com/cryptape/ckb-script-templates/tree/main/contract) template, which is put into `contracts` sub-folder, the workspace-level `Makefile` assumes all Rust contracts are stored in `contracts` folder, and treat crates stored in other folders as dependency-only Rust crates.
+By default, the newly created crate is using [contract](https://github.com/nervosnetwork/ckb-script-templates/tree/main/contract) template, which is put into `contracts` sub-folder, the workspace-level `Makefile` assumes all Rust contracts are stored in `contracts` folder, and treat crates stored in other folders as dependency-only Rust crates.
 
 But chances are you would want to tweak the default settings in certain scenarios:
 
@@ -211,11 +211,11 @@ By default, the checksum file is stored in `checksums.txt` in the root of the re
 
 ### Standalone Contract Crate
 
-In rare cases if you want to simply use a standalone contract crate without a workspace. The [standalone-contract](https://github.com/cryptape/ckb-script-templates/tree/main/standalone-contract) template is prepared for you:
+In rare cases if you want to simply use a standalone contract crate without a workspace. The [standalone-contract](https://github.com/nervosnetwork/ckb-script-templates/tree/main/standalone-contract) template is prepared for you:
 
 ```
-$ cargo generate gh:cryptape/ckb-script-templates standalone-contract
-⚠️   Favorite `gh:cryptape/ckb-script-templates` not found in config, using it as a git repository: https://github.com/cryptape/ckb-script-templates.git
+$ cargo generate gh:nervosnetwork/ckb-script-templates standalone-contract
+⚠️   Favorite `gh:nervosnetwork/ckb-script-templates` not found in config, using it as a git repository: https://github.com/nervosnetwork/ckb-script-templates.git
 🤷   Project Name: standalone-first-contract
 🔧   Destination: /tmp/standalone-first-contract ...
 🔧   project-name: standalone-first-contract ...
