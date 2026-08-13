@@ -11,7 +11,7 @@ The new script will be placed in the `contracts` folder.
 ## Toolchain and target
 All crates under `contracts` should target RISC-V (rv64imcb) and require `no_std`. All crates under `tests` target the native platform and support `std`.
 
-Always use rust toolchain from: https://github.com/nervosnetwork/ckb/blob/develop/rust-toolchain.toml
+Always use rust toolchain from: https://github.com/nervosnetwork/ckb/blob/develop/rust-toolchain.toml. Pin `rust-toolchain.toml` at the project root.
 
 Clang might be used in the toolchain. If it is missing on the target machine, ask the user to install it.
 
@@ -48,7 +48,7 @@ Detailed information about syscalls:
 
 When using syscalls, first use the `high_level` module. If it doesn't meet your requirements, use the `syscalls` module instead.
 When using syscalls, use the predefined types in `ckb-types`, such as Script, WitnessArgs, Transaction, CellInput, CellOutput, etc, instead of parsing molecule from scratch.
-
+Don't use `native-simulator` feature unless explicitly requested.
 
 IMPORTANT: Overview of transaction structure:
 https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0022-transaction-structure/0022-transaction-structure.md
@@ -68,7 +68,7 @@ All data structures in transactions (e.g. cell data, witness) should use [molecu
 
 By default, generate Rust code via `moleculec` and commit the generated files to git. Users can explicitly request compiling it on the fly with [build.rs](https://github.com/nervosnetwork/molecule/blob/master/examples/ci-tests/build.rs).
 
-Don't parse molecule from scratch: using existing types in `ckb-types` or results from `moleculec`.
+Don't parse molecule from scratch: use existing types in `ckb-types` or results from `moleculec`. Ignore all clippy warnings on generated rust files from `moleculec`.
 
 Users can explicitly request a different serialization system (e.g. serde).
 
@@ -78,12 +78,15 @@ When a new crate is introduced, make sure it supports `no_std`. Also diff the bi
 ## Writing Tests
 Use [ckb-testtool](https://github.com/nervosnetwork/ckb-testtool) to write unit tests. It is important to include failure test case.
 
+Don't use `verify_and_dump_failed_tx` unless explicitly requested. `verify_tx` from `ckb-testtool` is enough.
+
 ## Tests
 After changes, always do following to verify:
 ```
 make build
 make test
 ```
+
 
 ## Crates
 Crates used in on-chain scripts run in a `no_std` environment, so they should use special features.
