@@ -1,5 +1,5 @@
 # CKB On-Chain Script Guide
-This is a guide for AI agent to write on-chain scripts on CKB.
+This guide helps AI agents write on-chain scripts on CKB.
 
 ## Memory
 The on-chain script runs on [ckb-vm](https://github.com/nervosnetwork/ckb-vm), a RISC-V 64-bit virtual machine, with a total memory of 4M. The basic memory layout, from low address to high, is as follows:
@@ -9,7 +9,7 @@ The on-chain script runs on [ckb-vm](https://github.com/nervosnetwork/ckb-vm), a
 - stack
 - other (e.g., argv) <--- 4M
 
-With ckb-std's default_alloc! , the heap is a static buffer that lives inside .bss of the ELF — there is no distinct heap area owned by the VM between the ELF and the stack.
+With ckb-std's default_alloc! , the heap is a static buffer that lives inside .bss of the ELF — there is no distinct heap area owned by the VM.
 
 By default, it use following configuration:
 ```
@@ -22,7 +22,7 @@ More information for [buddy-alloc](https://github.com/jjyr/buddy-alloc)
 
 
 ## ckb-std
-This is a must-use crate for development. Its source code is available at https://github.com/nervosnetwork/ckb-std/tree/master
+This is a must-use crate for development. Its source code is available at https://github.com/nervosnetwork/ckb-std
 
 It provides the following features:
 - ckb syscalls (high-level wrapper)
@@ -38,6 +38,10 @@ Detailed information about syscalls:
 - https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0050-vm-syscalls-3/0050-vm-syscalls-3.md
 
 When using syscalls, first use the `high_level` module. If it doesn't meet your requirements, use the `syscalls` module instead.
+
+IMPORTANT: Overview of transaction structure:
+https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0022-transaction-structure/0022-transaction-structure.md
+
 
 ## Rust
 The default language for writing on-chain scripts is Rust. Unless the user requests otherwise, don't use C. If C is used, refer to [ckb-c-stdlib](https://github.com/nervosnetwork/ckb-c-stdlib) and the [guide](https://github.com/nervosnetwork/ckb-c-stdlib/blob/master/guide.md).
@@ -57,7 +61,7 @@ Users can explicitly request a different serialization system (e.g. serde).
 When a new crate is introduced, make sure it supports `no_std`. Also diff the binary size before and after, and report to users if the size exceeds 100K. Warn users if the final binary size exceed 400K. The limit of binary size is about 500K.
 
 ## Writing Tests
-Use [ckb-testtool](https://github.com/nervosnetwork/ckb-testtool) to write unit tests. It is important to include failure test cases, and any error code defined should be covered by the unit tests.
+Use [ckb-testtool](https://github.com/nervosnetwork/ckb-testtool) to write unit tests. It is important to include failure test case.
 
 ## Tests
 After changes, always do following to verify:
