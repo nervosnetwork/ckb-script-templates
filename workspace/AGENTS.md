@@ -47,6 +47,8 @@ Detailed information about syscalls:
 - https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0050-vm-syscalls-3/0050-vm-syscalls-3.md
 
 When using syscalls, first use the `high_level` module. If it doesn't meet your requirements, use the `syscalls` module instead.
+When using syscalls, use the predefined types in `ckb-types`, such as Script, WitnessArgs, Transaction, CellInput, CellOutput, etc, instead of parsing molecule from scratch.
+
 
 IMPORTANT: Overview of transaction structure:
 https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0022-transaction-structure/0022-transaction-structure.md
@@ -65,6 +67,8 @@ It's recommended to add the `enable_log` feature to the project. It is disabled 
 All data structures in transactions (e.g. cell data, witness) should use [molecule](https://github.com/nervosnetwork/molecule). See the related [spec](https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0008-serialization/0008-serialization.md).
 
 By default, generate Rust code via `moleculec` and commit the generated files to git. Users can explicitly request compiling it on the fly with [build.rs](https://github.com/nervosnetwork/molecule/blob/master/examples/ci-tests/build.rs).
+
+Don't parse molecule from scratch: using existing types in `ckb-types` or results from `moleculec`.
 
 Users can explicitly request a different serialization system (e.g. serde).
 
@@ -93,6 +97,11 @@ ckb-hash = { version = "???", default-features = false, features = ["ckb-contrac
 - When using `sparse-merkle-tree`,  add the `with-blake2b-ref` and `smtc` features:
 ```
 sparse-merkle-tree = { version = "???", default-features = false, features = ["with-blake2b-ref", "smtc"] }
+```
+
+- When using `ckb-types`, set `default-features` to false:
+```
+ckb-types = { package = "ckb-gen-types", version = "???", default-features = false }
 ```
 
 In unit tests, you are free to use other features.
