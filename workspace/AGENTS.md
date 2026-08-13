@@ -1,13 +1,23 @@
 # CKB On-Chain Script Guide
 This guide helps AI agents write on-chain scripts on CKB.
 
+## New on-chain script
+Use the following command to create a new script:
+```
+make generate CRATE=on-chain-script-1
+```
+The new script will be placed in the `contracts` folder.
+
+## Toolchain and target
+All crates under `contracts` should target RISC-V (rv64imcb) and require `no_std`. All crates under `tests` target the native platform and support `std`.
+
+Always use rust toolchain from: https://github.com/nervosnetwork/ckb/blob/develop/rust-toolchain.toml
+
+Clang might be used in the toolchain. If it is missing on the target machine, ask the user to install it.
+
 ## Memory
-The on-chain script runs on [ckb-vm](https://github.com/nervosnetwork/ckb-vm), a RISC-V 64-bit virtual machine, with a total memory of 4M. The basic memory layout, from low address to high, is as follows:
-- elf text
-- rodata/data/bss and heap
-- GAP
-- stack
-- other (e.g., argv) <--- 4M
+The on-chain script runs on [ckb-vm](https://github.com/nervosnetwork/ckb-vm), a RISC-V 64-bit virtual machine, with a total memory of 4M.
+There is no need to write a linker script. The default memory layout is sufficient.
 
 With ckb-std's default_alloc! , the heap is a static buffer that lives inside .bss of the ELF — there is no distinct heap area owned by the VM.
 
@@ -19,7 +29,6 @@ By default, it use following configuration:
 ckb_std::default_alloc!(16384, 1258306, 64);
 ```
 More information for [buddy-alloc](https://github.com/jjyr/buddy-alloc)
-
 
 ## ckb-std
 This is a must-use crate for development. Its source code is available at https://github.com/nervosnetwork/ckb-std
@@ -44,7 +53,9 @@ https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0022-transaction-structur
 
 
 ## Rust
-The default language for writing on-chain scripts is Rust. Unless the user requests otherwise, don't use C. If C is used, refer to [ckb-c-stdlib](https://github.com/nervosnetwork/ckb-c-stdlib) and the [guide](https://github.com/nervosnetwork/ckb-c-stdlib/blob/master/guide.md).
+The default language for writing on-chain scripts is Rust. 
+
+IMPORTANT: Unless the user requests otherwise, don't use C. If C is used, refer to [ckb-c-stdlib](https://github.com/nervosnetwork/ckb-c-stdlib) and the [guide](https://github.com/nervosnetwork/ckb-c-stdlib/blob/master/guide.md).
 
 
 ## Log
@@ -70,3 +81,18 @@ make build
 make test
 ```
 
+## Crates
+Crates used in on-chain scripts run in a `no_std` environment, so they should use special features.
+
+
+- When using blake2b, add `ckb-hash` with the `ckb-contract` feature enabled:
+```
+ckb-hash = { version = "???", default-features = false, features = ["ckb-contract"]}
+```
+
+- When using `sparse-merkle-tree`,  add the `with-blake2b-ref` and `smtc` features:
+```
+sparse-merkle-tree = { version = "???", default-features = false, features = ["with-blake2b-ref", "smtc"] }
+```
+
+In unit tests, you are free to use other features.
