@@ -49,7 +49,7 @@ Detailed information about syscalls:
 When using syscalls, first use the `high_level` module. If it doesn't meet your requirements, use the `syscalls` module instead.
 When using syscalls, use the predefined types in `ckb-types`, such as Script, WitnessArgs, Transaction, CellInput, CellOutput, etc, instead of parsing molecule from scratch.
 
-The `ckb-types`, `allocator`, and `molecule` features are sufficient for most cases. Try them first, then consider adding others. Don't use the `native-simulator` feature unless explicitly requested.
+The `ckb-types`, `allocator`, and `calc-hash` features are sufficient for most cases. Try them first, then consider adding others. Don't use the `native-simulator` feature unless explicitly requested.
 
 IMPORTANT: Overview of transaction structure:
 https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0022-transaction-structure/0022-transaction-structure.md
